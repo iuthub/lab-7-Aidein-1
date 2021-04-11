@@ -1,7 +1,20 @@
-<?php  
+<?php
+    include('connection.php');
 
-include('connection.php');
+    $register_new_user_stmt = $database->prepare('INSERT INTO users(username, fullname, email, password, dob) VALUES (?,?,?,?,?)');
 
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $username = $_REQUEST['username'];
+        $fullname = $_REQUEST['fullname'];
+        $email = $_REQUEST['email'];;
+        $pwd = $_REQUEST['pwd'];
+        $conf_pwd = $_REQUEST['confirm_pwd'];
+        $dob = date('Y-m-d');
+
+        $register_new_user_stmt->execute(array($username, $fullname, $email, $pwd, $dob));
+
+        header('Location: index.php');
+    }
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
